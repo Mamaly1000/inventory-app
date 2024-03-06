@@ -52,10 +52,10 @@ class ProductView {
     });
     const productsDOM = document.getElementById("products-list");
     productsDOM.innerHTML = result;
-    // const deleteBtns = [...document.querySelectorAll(".delete-product")];
-    // deleteBtns.forEach((item) => {
-    //   item.addEventListener("click", (e) => this.deleteProduct(e));
-    // });
+    const deleteBtns = [...document.querySelectorAll(".delete-product")];
+    deleteBtns.forEach((item) => {
+      item.addEventListener("click", (e) => this.deleteProduct(e));
+    });
   }
   searchProducts(e) {
     const value = e.target.value.trim().toLowerCase();
@@ -75,6 +75,12 @@ class ProductView {
     this.createProductsList(this.products);
   }
   onMount() {
+    this.products = Storage.getAllProducts();
+    this.createProductsList(this.products);
+  }
+  deleteProduct(e) {
+    const produdcId = e.target.dataset.productId;
+    Storage.deleteProduct(produdcId);
     this.products = Storage.getAllProducts();
     this.createProductsList(this.products);
   }

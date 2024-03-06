@@ -9,6 +9,12 @@ const cancelAddCategory = document.querySelector("#cancel-add-category");
 class CategoryView {
   constructor() {
     addNewCetgoryBtn.addEventListener("click", (e) => this.addNewCategory(e));
+    toggleAddCategoryBtn.addEventListener("click", (e) =>
+      this.toggleAddCategory(e)
+    );
+    cancelAddCategory.addEventListener("click", (e) =>
+      this.cancelAddCategory(e)
+    );
     this.categories = [];
   }
   addNewCategory(e) {
@@ -27,9 +33,10 @@ class CategoryView {
     categoryWrapper.classList.add("hidden");
     toggleAddCategoryBtn.classList.remove("hidden");
   }
-  onMount() {
-    this.categories = Storage.getAllCategories();
-    this.createCategoriesList();
+  toggleAddCategory(e) {
+    e.preventDefault();
+    categoryWrapper.classList.remove("hidden");
+    toggleAddCategoryBtn.classList.add("hidden");
   }
   createCategoriesList() {
     let result = `<option class="bg-slate-500 text-slate-300" value="">select a category</option>`;
@@ -39,6 +46,15 @@ class CategoryView {
 
     const categoryDOM = document.getElementById("product-category");
     categoryDOM.innerHTML = result;
+  }
+  cancelAddCategory(e) {
+    e.preventDefault();
+    categoryWrapper.classList.add("hidden");
+    toggleAddCategoryBtn.classList.remove("hidden");
+  }
+  onMount() {
+    this.categories = Storage.getAllCategories();
+    this.createCategoriesList();
   }
 }
 export default new CategoryView();
